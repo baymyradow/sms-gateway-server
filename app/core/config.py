@@ -16,7 +16,7 @@ class Settings(BaseSettings):
         extra="ignore",
     )
     API_V0_STR: str = "/api/v0"
-    SECRET_KEY: str = secrets.token_hex(32)
+    GATEWAY_PRIVATE_TOKEN: str = secrets.token_hex(32)
     ENVIRONMENT: Literal["local", "staging", "production"] = "local"
     PROJECT_NAME: str
     POSTGRES_HOST: str 
@@ -50,7 +50,7 @@ class Settings(BaseSettings):
             
     @model_validator(mode="after")
     def _enforce_non_default_secrets(self) -> Self:
-        self._check_default_secret("SECRET_KEY", self.SECRET_KEY)
+        self._check_default_secret("GATEWAY_PRIVATE_TOKEN", self.GATEWAY_PRIVATE_TOKEN)
         self._check_default_secret("POSTGRES_PASSWORD", self.POSTGRES_PASSWORD)
 
         return self
